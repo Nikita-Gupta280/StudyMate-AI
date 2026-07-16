@@ -10,7 +10,7 @@ import os
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
-from document_loader import load_document
+from services.document_loader import load_document
 
 CHROMA_DIR = "chroma_db"
 
