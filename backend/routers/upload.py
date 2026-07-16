@@ -1,9 +1,10 @@
-from fastapi import APIRouter
-
+from fastapi import APIRouter, UploadFile, File
+import shutil
 router = APIRouter()
 
-@router.get("/upload")
-def upload_page():
-    return {
-        "message": "Upload API is working!"
-    }
+@router.post("/upload")
+async def upload_file(file: UploadFile = File(...)):
+   with open(f"uploads/{file.filename}", "wb") as buffer:
+    shutil.copyfileobj(file.file, buffer)
+
+   return {"message": "File uploaded successfully!"}
