@@ -145,7 +145,39 @@ def generate_quiz(session_id: str = "default", collection_name: str = "studymate
         session_id=session_id,
         collection_name=collection_name
     )
+def generate_flashcards(session_id: str = "default", collection_name: str = "studymate"):
+        """
+        Generates flashcards from the uploaded study material.
+        """
+
+        prompt = """
+        Using ONLY the uploaded study material, generate exactly 10 flashcards.
+
+        Return them in this format:
+
+        Flashcard 1
+        Front: ...
+        Back: ...
+
+        Flashcard 2
+        Front: ...
+        Back: ...
+
+        Continue until Flashcard 10.
+
+        Do NOT invent information.
+        Use only the uploaded notes.
+        """
+
+        return ask(
+            prompt,
+            session_id=session_id,
+            collection_name=collection_name
+        )
+
 
 if __name__ == "__main__":
     print(ask("Explain Newton's Second Law."))
     print(ask("Give one real-world example of it."))
+
+    
