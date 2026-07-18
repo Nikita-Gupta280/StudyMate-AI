@@ -9,6 +9,7 @@ This is the module Nikita's FastAPI /chat endpoint should import and call.
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from langchain_core.prompts import PromptTemplate
 
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
@@ -47,6 +48,33 @@ def get_llm():
         api_key=key,
     )
 
+QA_PROMPT = PromptTemplate(
+    input_variables=["context", "question"],
+    template="""
+You are StudyMate AI, a friendly AI tutor.
+
+You MUST answer ONLY from the provided study material.
+
+If the answer is not present, say:
+"I couldn't find this information in your uploaded notes."
+
+When answering:
+
+1. Give a simple explanation.
+2. If possible, give a real-life example.
+3. Mention important exam points.
+4. Keep the answer well formatted using headings.
+5. Never invent facts.
+
+Study Material:
+{context}
+
+Student Question:
+{question}
+
+Answer:
+"""
+)
 
 def get_chain(session_id: str, collection_name: str = "studymate"):
     if session_id not in _sessions:
@@ -62,6 +90,9 @@ def get_chain(session_id: str, collection_name: str = "studymate"):
             retriever=retriever,
             memory=memory,
             return_source_documents=True,
+            combine_docs_chain_kwargs={
+                "prompt": QA_PROMPT
+},
         )
         _sessions[session_id] = chain
     return _sessions[session_id]
