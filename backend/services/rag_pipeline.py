@@ -39,9 +39,7 @@ def get_vectordb(collection_name: str = "studymate"):
 
 def get_llm():
     key = os.getenv("GROQ_API_KEY")
-    print("API KEY FOUND:", key is not None)
-    if key:
-        print("API KEY PREFIX:", key[:8])
+
 
     return ChatGroq(
         model="llama-3.3-70b-versatile",
@@ -86,6 +84,36 @@ def ask(question: str, session_id: str = "default", collection_name: str = "stud
         "sources": sources,
     }
 
+def generate_quiz(session_id: str = "default", collection_name: str = "studymate"):
+    """
+    Generates a quiz from the uploaded study material.
+    """
+
+    prompt = """
+    Using ONLY the uploaded study material, generate exactly 5 multiple-choice questions.
+
+    Return the response in this format:
+
+    Q1. Question
+
+    A.
+    B.
+    C.
+    D.
+
+    Correct Answer:
+    Explanation:
+
+    Repeat for all 5 questions.
+
+    Do not invent information that is not present in the uploaded notes.
+    """
+
+    return ask(
+        prompt,
+        session_id=session_id,
+        collection_name=collection_name
+    )
 
 if __name__ == "__main__":
     print(ask("Explain Newton's Second Law."))
