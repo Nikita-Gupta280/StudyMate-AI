@@ -115,6 +115,40 @@ def ask(question: str, session_id: str = "default", collection_name: str = "stud
         "sources": sources,
     }
 
+def generate_from_notes(
+    instruction: str,
+    session_id: str = "default",
+    collection_name: str = "studymate",
+):
+    vectordb = get_vectordb(collection_name)
+    retriever = vectordb.as_retriever(search_kwargs={"k": 4})
+
+    docs = retriever.invoke(instruction)
+
+    context = "\n\n".join(doc.page_content for doc in docs)
+
+    prompt = f"""
+You are StudyMate AI.
+
+Use ONLY the study material below.
+
+Study Material:
+{context}
+
+Task:
+{instruction}
+"""
+
+    response = get_llm().invoke(prompt)
+
+    return {
+        "answer": response.content,
+        "sources": [
+            doc.metadata.get("source", "unknown")
+            for doc in docs
+        ]
+    }
+
 def generate_quiz(session_id: str = "default", collection_name: str = "studymate"):
     """
     Generates a quiz from the uploaded study material.
@@ -123,27 +157,39 @@ def generate_quiz(session_id: str = "default", collection_name: str = "studymate
     prompt = """
     Using ONLY the uploaded study material, generate exactly 5 multiple-choice questions.
 
-    Return the response in this format:
+    IMPORTANT FORMATTING RULES:
 
-    Q1. Question
-
-    A.
-    B.
-    C.
-    D.
-
-    Correct Answer:
-    Explanation:
-
-    Repeat for all 5 questions.
-
-    Do not invent information that is not present in the uploaded notes.
+    - Return the output in Markdown.
+    - Put each option on a NEW LINE.
+    - Leave one blank line after every question.
+    - Leave one blank line before the explanation.
+ 
+    Example:
+ 
+    ## Q1. Question
+ 
+    A. Option A
+ 
+    B. Option B
+ 
+    C. Option C
+ 
+    D. Option D
+  
+    **Correct Answer:** B
+ 
+    **Explanation:** Explain why B is correct.
+ 
+    Repeat this format for all 5 questions.
+ 
+    Do NOT invent information.
+    Use ONLY the uploaded study material.
     """
 
-    return ask(
-        prompt,
+    return generate_from_notes(
+        instruction=prompt,
         session_id=session_id,
-        collection_name=collection_name
+        collection_name=collection_name,
     )
 def generate_flashcards(session_id: str = "default", collection_name: str = "studymate"):
         """
@@ -169,11 +215,12 @@ def generate_flashcards(session_id: str = "default", collection_name: str = "stu
         Use only the uploaded notes.
         """
 
-        return ask(
-            prompt,
+        return generate_from_notes(
+            instruction=prompt,
             session_id=session_id,
-            collection_name=collection_name
-        )
+            collection_name=collection_name,
+      )
+        
 
 
 if __name__ == "__main__":

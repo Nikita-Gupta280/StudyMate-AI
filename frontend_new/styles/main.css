@@ -1,0 +1,180 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Global */
+html,
+body,
+[class*="css"] {
+    font-family: "Inter", sans-serif;
+}
+
+/* Main App */
+.stApp {
+    background-color: #0F172A;
+    color: #F8FAFC;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #1E293B;
+    border-right: 1px solid #334155;
+}
+
+/* Buttons */
+
+.stButton > button {
+    width: 100%;
+    background: #6366F1;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 0.8rem 1.2rem;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.30);
+}
+
+/* Containers */
+div[data-testid="stVerticalBlock"] > div:has(> div[data-testid="stMarkdownContainer"]) {
+    border-radius: 16px;
+}
+
+/* Headings */
+h1, h2, h3 {
+    font-weight: 700;
+    color: #F8FAFC;
+}
+
+/* Paragraphs */
+p {
+    color: #CBD5E1;
+    line-height: 1.6;
+}
+/* Main content spacing */
+
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    max-width: 1400px;
+}
+/* ==========================
+   Hero Card
+   ========================== */
+
+.hero-card {
+    background: linear-gradient(135deg, #1E293B 0%, #273549 100%);
+    border: 1px solid #334155;
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 24px;
+}
+
+.hero-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #ebf1f2;
+    margin-bottom: 12px;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: #CBD5E1;
+    line-height: 1.7;
+}
+/* ==========================
+   Page Header
+   ========================== */
+
+.page-header{
+    margin-bottom:24px;
+}
+
+.page-title{
+    font-size:2rem;
+    font-weight:700;
+    color:#F8FAFC;
+    margin-bottom:6px;
+}
+
+.page-subtitle{
+    font-size:1rem;
+    color:#94A3B8;
+}
+/* ==========================
+   Section Card
+   ========================== */
+
+.section-card{
+    background:#1E293B;
+    border:1px solid #334155;
+    border-radius:18px;
+    padding:24px;
+    margin:24px 0;
+}
+
+.section-card-title{
+    font-size:1.2rem;
+    font-weight:600;
+    color:#F8FAFC;
+    margin-bottom:20px;
+}
+/* ==========================
+   Stat Card
+   ========================== */
+
+.stat-card{
+
+    background:#1E293B;
+
+    border:1px solid #334155;
+
+    border-radius:18px;
+
+    padding:24px;
+
+    transition:0.25s;
+
+    margin-bottom:10px;
+}
+
+.stat-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#6366F1;
+}
+
+.stat-title{
+
+    color:#94A3B8;
+
+    font-size:14px;
+
+    margin-bottom:14px;
+}
+
+.stat-value{
+
+    color:white;
+
+    font-size:34px;
+
+    font-weight:700;
+}
+
+.stat-delta{
+
+    margin-top:12px;
+
+    color:#22C55E;
+
+    font-weight:600;
+}
