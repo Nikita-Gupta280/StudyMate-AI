@@ -21,6 +21,7 @@ def show():
             "answers": {},
             "score": None,
             "submitted": False,
+            "generated_quiz": None,
         }
 
     # ======================================================
@@ -28,46 +29,45 @@ def show():
     # ======================================================
 
     page_header(
-        "📝 AI Quiz Generator",
+        "📝 Quiz Generator",
         "Practice with AI-generated questions from your uploaded notes."
     )
-
-    # ======================================================
-    # QUIZ SETTINGS
-    # ======================================================
-
     with st.container(border=True):
-        quiz_settings()
+        st.markdown("""
+    ### 💡 How it works
 
-    st.write("")
+    1. 📂 Upload your study notes
+    2. 🚀 Generate an AI Quiz
+    3. 📝 Test your understanding instantly
+    """
+    )
+  
 
     # ======================================================
     # TEMPORARY SAMPLE QUESTIONS
     # Replace this with backend later
     # ======================================================
 
-    if st.button("🚀 Generate AI Quiz", use_container_width=True):
+    if st.button("📝 Generate Quiz", use_container_width=True):
 
-        with st.spinner("Generating quiz..."):
+        with st.spinner("📝 AI is generating quiz questions..."):
 
             result = generate_quiz()
 
-            st.markdown("## 📝 AI Generated Quiz")
+            st.session_state.quiz["generated_quiz"] = result["answer"]
 
-            with st.container(border=True):
-                st.markdown(result["answer"].replace("\\n", "\n"))
+    if st.session_state.quiz.get("generated_quiz"):
+
+        st.markdown("##📝 Generate Quiz")
+
+        with st.container(border=True):
+            st.markdown(
+                st.session_state.quiz["generated_quiz"].replace("\\n", "\n")
+            )  
     return
 
 
-    #if "generated_quiz" in st.session_state:
-
-        #st.markdown("## 📝 AI Generated Quiz")
-
-        #with st.container(border=True):
-          #  st.markdown(st.session_state.quiz["generated_quiz"])
-
-    #return
-
+    
 
 
 
