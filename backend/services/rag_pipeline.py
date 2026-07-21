@@ -125,6 +125,13 @@ def generate_from_notes(
 
     docs = retriever.invoke(instruction)
 
+    print("\n========== RETRIEVED SOURCES ==========")
+
+    for doc in docs:
+        print(doc.metadata.get("source"))
+
+    print("======================================\n")
+
     context = "\n\n".join(doc.page_content for doc in docs)
 
     prompt = f"""
@@ -157,33 +164,44 @@ def generate_quiz(session_id: str = "default", collection_name: str = "studymate
     prompt = """
     Using ONLY the uploaded study material, generate exactly 5 multiple-choice questions.
 
-    IMPORTANT FORMATTING RULES:
+    Follow these rules STRICTLY:
 
-    - Return the output in Markdown.
-    - Put each option on a NEW LINE.
-    - Leave one blank line after every question.
-    - Leave one blank line before the explanation.
- 
-    Example:
- 
-    ## Q1. Question
- 
+    # 📝 AI Quiz
+
+    - Return the output in proper Markdown.
+    - Generate exactly 5 questions.
+    - Each question must have exactly 4 options.
+    - Put every option on a separate line.
+    - Leave one blank line between sections.
+    - Add a horizontal separator (---) after every question.
+    - Do NOT use tables.
+    - Do NOT invent information.
+    - Use ONLY the uploaded study material.
+
+    Use this exact format:
+
+    # 📝 AI Quiz
+
+    ## Question 1
+
+    Question text here?
+
     A. Option A
- 
+
     B. Option B
- 
+
     C. Option C
- 
+
     D. Option D
-  
-    **Correct Answer:** B
- 
-    **Explanation:** Explain why B is correct.
- 
-    Repeat this format for all 5 questions.
- 
-    Do NOT invent information.
-    Use ONLY the uploaded study material.
+
+    ✅ **Correct Answer:** B
+
+    💡 **Explanation:**
+    Write a short explanation (1–2 sentences).
+
+    ---
+
+    Repeat this format for Questions 2, 3, 4 and 5.
     """
 
     return generate_from_notes(
@@ -192,39 +210,62 @@ def generate_quiz(session_id: str = "default", collection_name: str = "studymate
         collection_name=collection_name,
     )
 def generate_flashcards(session_id: str = "default", collection_name: str = "studymate"):
-        """
-        Generates flashcards from the uploaded study material.
-        """
+    print("🔥 GENERATE_FLASHCARDS FUNCTION CALLED")
+    """
+    Generates flashcards from the uploaded study material.
+    """
 
-        prompt = """
-        Using ONLY the uploaded study material, generate exactly 10 flashcards.
+    prompt = """
+Using ONLY the uploaded study material, generate exactly 5 flashcards.
 
-        Return them in this format:
+Follow these rules STRICTLY:
 
-        Flashcard 1
-        Front: ...
-        Back: ...
+# 🧠 AI Flashcards
 
-        Flashcard 2
-        Front: ...
-        Back: ...
+- Return the output in proper Markdown.
+- Generate exactly 5 flashcards.
+- Each flashcard should test one important concept.
+- Keep the Front short (one question).
+- Keep the Back clear and educational (2–3 sentences).
+- Leave one blank line between sections.
+- Add a horizontal separator (---) after every flashcard.
+- Do NOT use tables.
+- Do NOT invent information.
+- Use ONLY the uploaded study material.
 
-        Continue until Flashcard 10.
+Use this exact format:
 
-        Do NOT invent information.
-        Use only the uploaded notes.
-        """
+# 🧠 AI Flashcards
 
-        return generate_from_notes(
-            instruction=prompt,
-            session_id=session_id,
-            collection_name=collection_name,
-      )
-        
+## 🧠 Flashcard 1
 
+### Front
 
-if __name__ == "__main__":
-    print(ask("Explain Newton's Second Law."))
-    print(ask("Give one real-world example of it."))
+What is the concept?
 
-    
+### Back
+
+Answer the question in 2–3 sentences.
+
+---
+
+## 🧠 Flashcard 2
+
+### Front
+
+Question
+
+### Back
+
+Answer
+
+---
+
+Continue until Flashcard 5.
+"""
+
+    return generate_from_notes(
+        instruction=prompt,
+        session_id=session_id,
+        collection_name=collection_name,
+    )

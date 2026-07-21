@@ -1,9 +1,11 @@
 from fastapi import APIRouter, UploadFile, File
 import shutil
-import os
 
 from services.ingest import ingest_file
+from services.rag_pipeline import _sessions
+
 router = APIRouter()
+
 
 @router.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
@@ -13,6 +15,9 @@ async def upload_file(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, buffer)
 
     ingest_result = ingest_file(file_path)
+
+    # Clear old chat sessions after uploading a new document
+    _sessions.clear()
 
     return {
         "message": "File uploaded successfully!",

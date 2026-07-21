@@ -44,11 +44,27 @@ def ingest_file(file_path: str, collection_name: str = "studymate"):
     docs = chunk_text(text, source_name)
 
     embeddings = get_embeddings()
+    # Connect to Chroma
     vectordb = Chroma(
         collection_name=collection_name,
         embedding_function=embeddings,
         persist_directory=CHROMA_DIR,
     )
+
+    # Delete all previous documents
+    try:
+        vectordb.delete_collection()
+    except Exception:
+        pass
+
+    # Create a fresh collection
+    vectordb = Chroma(
+        collection_name=collection_name,
+        embedding_function=embeddings,
+        persist_directory=CHROMA_DIR,
+    )
+
+    # Add only the new document
     vectordb.add_documents(docs)
     vectordb.persist()
 
