@@ -3,6 +3,7 @@ from components.file_card import file_card
 from components.page_header import page_header
 from utils.api import upload_file
 
+
 def show():
   
    page_header(
@@ -13,6 +14,9 @@ def show():
    st.divider()
    with st.container(border=True):
     st.markdown("### Upload Study Material")
+
+    if "uploaded_files" not in st.session_state:
+      st.session_state.uploaded_files = []
    
     uploaded_files = st.file_uploader(
     "Upload Files",
@@ -22,13 +26,29 @@ def show():
     )
 
    if uploaded_files:
-        for file in uploaded_files:
-             result = upload_file(file)
+      for file in uploaded_files:
 
-             st.success(result["message"])
+         result = upload_file(file)
 
-             file_card(
-                file.name,
-                file.size / 1024,
-                "Indexed"
+         st.success(result["message"])
+
+         # Save file information in session
+         st.session_state.uploaded_files = [
+            {
+               "name": file.name,
+               "size": file.size / 1024,
+            }
+         ]
+
+   # Show all uploaded files
+   if st.session_state.uploaded_files:
+
+      st.markdown("## 📚 Uploaded Files")
+
+      for file in st.session_state.uploaded_files:
+
+         file_card(
+            file["name"],
+            file["size"],
+            "Indexed"
         )
