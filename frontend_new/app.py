@@ -4,7 +4,6 @@ from views.home import show as show_home
 from views.upload import show as show_upload
 from views.chat import show as show_chat
 from views.quiz import show as show_quiz
-from views.progress_dashboard import show as show_progress_dashboard
 from views.flashcards import show as show_flashcards
 
 def load_css():
@@ -42,5 +41,3 @@ elif page == "Quiz":
 elif page == "Flashcards":
     show_flashcards()
 
-elif page == "Progress Dashboard":
-    show_progress_dashboard()

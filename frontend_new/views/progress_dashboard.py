@@ -1,17 +1,5 @@
 import streamlit as st
 
-from components.page_header import page_header
-
-from components.dashboard.overview_metric_card import overview_metrics
-from components.dashboard.study_streak import study_streak
-from components.dashboard.weekly_progress import weekly_progress
-from components.dashboard.quiz_performance import quiz_performance
-from components.dashboard.flashcard_mastery import flashcard_mastery
-from components.dashboard.recent_activity import recent_activity
-from components.dashboard.achievements import achievements
-
-from data.sample_dashboard_data import DASHBOARD_DATA
-
 
 def show():
 
@@ -19,69 +7,79 @@ def show():
     # PAGE HEADER
     # =====================================================
 
-    page_header(
-        "📊 Progress Dashboard",
-        "Track your learning progress, quiz performance, and study habits."
+    def show():
+
+        st.title("📚 Study Dashboard")
+
+        st.caption(
+            "Everything you need to continue learning from your uploaded notes."
+        )
+
+        st.divider()
+
+    st.write("")
+
+    st.subheader("📂 Current Uploaded File")
+
+    st.info(
+        """
+    The most recently uploaded PDF will be used for:
+
+    - 💬 AI Chat
+    - 📝 Quiz Generator
+    - 🧠 Flashcards
+
+    Uploading a new PDF automatically replaces the previous one.
+    """
     )
 
-    st.write("")
-
-    # =====================================================
-    # OVERVIEW METRICS
-    # =====================================================
-
-    overview_metrics(DASHBOARD_DATA)
-
-    st.write("")
     st.divider()
 
-    # =====================================================
-    # STUDY STREAK
-    # =====================================================
+    st.subheader("🤖 AI Features")
 
-    study_streak(DASHBOARD_DATA)
+    col1, col2, col3 = st.columns(3)
 
-    st.write("")
+    with col1:
+        st.info(
+            """
+    ### 💬 AI Chat
+
+    Ask questions directly from your uploaded notes and receive AI-generated answers.
+    """
+        )
+
+    with col2:
+        st.info(
+            """
+    ### 📝 Quiz Generator
+
+    Generate quizzes instantly to test your understanding.
+    """
+    )
+
+    with col3:
+        st.info(
+            """
+    ### 🧠 Flashcards
+
+    Create AI-powered flashcards for quick revision.
+    """
+        )
+
     st.divider()
 
-    # =====================================================
-    # WEEKLY PROGRESS
-    # =====================================================
+    st.subheader("🚀 How StudyMate AI Works")
 
-    weekly_progress(DASHBOARD_DATA)
+    st.success(
+        """
+    1. Upload your PDF notes.
 
-    st.write("")
-    st.divider()
+    2. Ask AI questions.
 
-    # =====================================================
-    # QUIZ PERFORMANCE
-    # =====================================================
+    3. Generate quizzes.
 
-    quiz_performance(DASHBOARD_DATA)
+    4. Review flashcards.
 
-    st.write("")
-    st.divider()
-
-    # =====================================================
-    # FLASHCARD MASTERY
-    # =====================================================
-
-    flashcard_mastery(DASHBOARD_DATA)
-
-    st.write("")
-    st.divider()
-
-    # =====================================================
-    # RECENT ACTIVITY
-    # =====================================================
-
-    recent_activity(DASHBOARD_DATA)
-
-    st.write("")
-    st.divider()
-
-    # =====================================================
-    # ACHIEVEMENTS
-    # =====================================================
-
-    achievements(DASHBOARD_DATA)
+    💡 Uploading a new PDF automatically replaces the previous one.
+    """
+    )

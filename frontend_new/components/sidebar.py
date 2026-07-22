@@ -6,8 +6,7 @@ NAV_ITEMS = [
     ("📁", "Upload Notes"),
     ("💬", "AI Chat"),
     ("📝", "Quiz"),
-    ("🧠", "Flashcards"),
-    ("📊", "Progress Dashboard"),
+    ("🧠", "Flashcards")
 ]
 
 
@@ -28,13 +27,22 @@ def render_sidebar():
 
         # Navigation buttons
         for icon, page in NAV_ITEMS:
+
+            button_type = (
+                "primary"
+                if st.session_state.current_page == page
+                else "secondary"
+            )
+
             if st.button(
                 f"{icon}  {page}",
                 use_container_width=True,
+                type=button_type,
                 key=f"nav_{page}"
             ):
                 st.session_state.current_page = page
+                st.rerun()
 
         st.divider()
 
-        st.caption("Built for better learning.")
+        st.caption("Powered by FastAPI • LangChain • Groq")

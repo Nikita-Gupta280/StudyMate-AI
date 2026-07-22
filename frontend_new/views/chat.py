@@ -72,20 +72,20 @@ I can help you:
         c1, c2, c3, c4 = st.columns(4)
 
         with c1:
-            if st.button("📖 Summarize my notes"):
-                send_message("Summarize my notes.")
+            if st.button("🗂 Study Roadmap"):
+                send_message("Create a study roadmap from my uploaded notes. List the topics in the order they should be studied.")
 
         with c2:
-            if st.button("📝 Generate a quiz"):
-                send_message("Generate a quiz.")
+            if st.button("📚 Explain in detail"):
+                send_message("Explain this topic in more detail with examples.")
 
         with c3:
-            if st.button("💡 Explain simply"):
-                send_message("Explain this topic simply.")
+            if st.button("⚡ Quick revision"):
+                send_message("Give me a quick revision of the uploaded notes in under 150 words.")
 
         with c4:
-            if st.button("🧠 Create flashcards"):
-                send_message("Create flashcards.")
+            if st.button("🧠 Memory tricks"):
+                send_message("Suggest easy ways or memory tricks to remember the important concepts from my uploaded notes.")
 
     for message in st.session_state.messages:
 

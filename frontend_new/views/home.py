@@ -1,6 +1,5 @@
 import streamlit as st
 from components.action_card import action_card
-from components.progress_overview import progress_overview
 from components.recent_files import recent_files
 from components.hero import hero
 
@@ -11,21 +10,35 @@ def show():
     left, right = st.columns([3, 2], gap="large")
 
     with left:
-      hero(
+       hero(
     "StudyMate AI",
     """
-    Study smarter, not harder
+    Your AI-powered study companion
 
     Upload your notes, chat with AI, generate quizzes,
-    create flashcards, and monitor your learning progress—
-    all from one clean and modern workspace.
+    and create flashcards—all from one clean and modern workspace.
     """
-)
+    )
+    col1, col2 = st.columns([1, 4])
 
-        
-    if st.button("Get Started", type="primary"):
+    with col1:
+        if st.button(
+            "📁 Upload Notes",
+            type="primary",
+            use_container_width=True
+        ):
             st.session_state.current_page = "Upload Notes"
             st.rerun()
+
+        
+    st.success("""
+    🚀 **Quick Start**
+
+    1. Upload your PDF notes
+    2. Ask AI questions
+    3. Generate quizzes
+    4. Review flashcards
+    """)
 
     with right:
         st.info(
@@ -36,12 +49,11 @@ def show():
 - Ask AI questions
 - Generate quizzes
 - Create flashcards
-- Track study progress
             """
         )
     st.divider()
 
-    st.subheader("Quick Actions")
+    st.subheader("📚 Learning Tools")
     col1, col2 = st.columns(2, gap="large")
 
     with col1:
@@ -71,16 +83,15 @@ def show():
         "Create interactive flashcards for quick revision.",
         "Flashcards"
         )        
+    
     with st.container(border=True):
 
-      st.subheader("📊 Study Progress")
-
-      progress_overview()
-   
-    with st.container(border=True):
-
-      st.subheader("📂 Recent Files")
+      st.subheader("📂 Upload Status")
 
       recent_files()
 
-    
+    st.divider()
+
+    st.caption(
+        "Built with ❤️ using FastAPI • Streamlit • LangChain • ChromaDB • Groq"
+    )
