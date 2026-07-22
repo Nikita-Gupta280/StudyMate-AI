@@ -1,22 +1,32 @@
-# 📚 StudyMate AI
+# StudyMate AI
 
-An AI-powered study assistant that allows students to upload study material, ask questions, and receive intelligent answers grounded in their own documents using Retrieval-Augmented Generation (RAG).
+StudyMate AI is an AI-powered study assistant that helps students learn from their own study material. Users can upload notes in different formats, ask questions, generate quizzes, and create flashcards. The application uses Retrieval-Augmented Generation (RAG) to provide responses based only on the uploaded documents instead of relying on general knowledge.
 
----
-
-## 🚀 Features
-
-- 📄 Upload PDF Notes
-- 🤖 AI Chat with Study Material
-- 🔍 Retrieval-Augmented Generation (RAG)
-- 📚 ChromaDB Vector Database
-- 🧠 HuggingFace Embeddings
-- ⚡ Groq LLM Integration
-- 💬 Context-aware Conversations
+This project was developed as part of our **Generative & Agentic AI Summer Internship Program (2026)** capstone.
 
 ---
 
-## 🛠️ Tech Stack
+## Project Overview
+
+Many students rely on notes from lectures, PDFs, and presentations while preparing for exams. Finding information from these resources can be time-consuming. StudyMate AI helps by allowing users to upload their study material and interact with it through an AI assistant. The application uses Retrieval-Augmented Generation (RAG) so that responses are based on the uploaded documents, making them more relevant and reducing incorrect answers.
+
+---
+
+## Features
+
+- Upload PDF, DOCX, PPTX, and TXT files
+- AI chat based on uploaded study material
+- Quiz generation from uploaded notes
+- Flashcard generation for quick revision
+- Retrieval-Augmented Generation (RAG)
+- Semantic search using ChromaDB
+- Automatic document processing and indexing
+- Session reset when a new document is uploaded
+- Clean and simple Streamlit interface
+
+---
+
+## Tech Stack
 
 ### Backend
 - Python
@@ -27,16 +37,20 @@ An AI-powered study assistant that allows students to upload study material, ask
 - Groq API
 
 ### Frontend
-- HTML
-- CSS
-- JavaScript
+- Streamlit
+
+### AI Concepts Used
+- Retrieval-Augmented Generation (RAG)
+- Vector Database
+- Semantic Search
+- Prompt Engineering
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
-StudyMate AI
+StudyMate-AI
 │
 ├── backend
 │   ├── routers
@@ -48,7 +62,11 @@ StudyMate AI
 │   ├── requirements.txt
 │   └── .env
 │
-├── frontend
+├── frontend_new
+│   ├── components
+│   ├── views
+│   ├── app.py
+│   └── ...
 │
 ├── README.md
 └── .gitignore
@@ -56,28 +74,103 @@ StudyMate AI
 
 ---
 
-## 👥 Team
+## How It Works
 
-- **Nikita Gupta** – Backend Development & Integration
-- **Bhawana** – RAG Pipeline & Document Processing
-- **Khushi** – AI Features
-- **Avni** – Frontend Development
-
----
-
-## 📌 Current Status
-
-- ✅ Backend Complete
-- ✅ RAG Pipeline Complete
-- ✅ Automatic PDF Ingestion
-- ✅ AI Chat Working
-- 🚧 Flashcards (In Progress)
-- 🚧 Quiz Generator (In Progress)
-- 🚧 Study Planner (In Progress)
-- 🚧 Frontend Integration (In Progress)
+1. The user uploads a study document.
+2. The document is processed and split into smaller chunks.
+3. The chunks are converted into embeddings and stored in ChromaDB.
+4. When the user asks a question, the most relevant chunks are retrieved.
+5. Groq generates a response using the retrieved context.
+6. The same knowledge base is also used to generate quizzes and flashcards.
 
 ---
 
-## 🎯 Goal
+## Running the Project
 
-StudyMate AI helps students learn smarter by transforming static notes into an interactive AI tutor capable of answering questions, generating study material, and assisting with exam preparation.
+### Clone the repository
+
+```bash
+git clone https://github.com/Nikita-Gupta280/StudyMate-AI.git
+```
+
+### Backend
+
+```bash
+cd backend
+
+python -m venv .venv
+```
+
+Activate the virtual environment.
+
+Windows
+
+```powershell
+.venv\Scripts\activate
+```
+
+Install dependencies.
+
+```bash
+pip install -r requirements.txt
+```
+
+Create a `.env` file and add your Groq API key.
+
+```env
+GROQ_API_KEY=your_api_key
+```
+
+Run the backend.
+
+```bash
+uvicorn main:app --reload
+```
+
+### Frontend
+
+```bash
+cd frontend_new
+
+streamlit run app.py
+```
+
+---
+
+## Current Status
+
+- ✅ Multi-format document upload
+- ✅ AI Chat
+- ✅ Quiz Generation
+- ✅ Flashcard Generation
+- ✅ RAG Pipeline
+- ✅ FastAPI Backend
+- ✅ Streamlit Frontend
+
+---
+
+## Future Work
+
+- Support multiple uploaded documents
+- User authentication
+- Save chat history
+- Study planner
+- Cloud deployment
+- Performance improvements
+
+---
+
+## Team
+
+| Member | Contribution |
+|----------|--------------|
+| **Nikita Gupta** | Backend Development, API Integration |
+| **Bhawana** | RAG Pipeline and Document Processing |
+| **Khushi** | AI Features and Testing |
+| **Avni** | Frontend Development |
+
+---
+
+## Acknowledgements
+
+This project was built using FastAPI, Streamlit, LangChain, ChromaDB, HuggingFace Embeddings, and the Groq API.
