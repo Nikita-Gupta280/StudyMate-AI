@@ -20,6 +20,6 @@ async def upload_file(file: UploadFile = File(...)):
     _sessions.clear()
 
     return {
-        "message": "File uploaded successfully!",
+        "message": f"{file.filename} uploaded successfully!",
         "ingestion": ingest_result
     }

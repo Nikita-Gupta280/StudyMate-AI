@@ -18,6 +18,10 @@ from langchain_classic.chains import ConversationalRetrievalChain
 from langchain_classic.memory import ConversationBufferMemory
 
 CHROMA_DIR = "chroma_db"
+# Load the embedding model only once
+EMBEDDINGS = HuggingFaceEmbeddings(
+    model_name="sentence-transformers/all-MiniLM-L6-v2"
+)
 
 # In-memory session store: {session_id: chain}.
 # Fine for a demo/capstone. For production, swap for a persisted store.
@@ -28,12 +32,9 @@ load_dotenv(dotenv_path=env_path)
 
 
 def get_vectordb(collection_name: str = "studymate"):
-    embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
-    )
     return Chroma(
         collection_name=collection_name,
-        embedding_function=embeddings,
+        embedding_function=EMBEDDINGS,
         persist_directory=CHROMA_DIR,
     )
 
@@ -51,7 +52,7 @@ def get_llm():
 QA_PROMPT = PromptTemplate(
     input_variables=["context", "question"],
     template="""
-You are StudyMate AI, a friendly AI tutor.
+You are StudyMate AI, an intelligent and adaptive study assistant. Tailor your response style to the student's request instead of following a fixed template.
 
 You MUST answer ONLY from the provided study material.
 
@@ -60,11 +61,15 @@ If the answer is not present, say:
 
 When answering:
 
-1. Give a simple explanation.
-2. If possible, give a real-life example.
-3. Mention important exam points.
-4. Keep the answer well formatted using headings.
-5. Never invent facts.
+- Answer according to the student's question.
+- Format each response naturally instead of using the same template.
+- Use headings only when they improve readability.
+- Use bullet points, numbered lists, tables, or short paragraphs when appropriate.
+- Give a real-life example only if it helps explain the concept.
+- Mention exam tips only when they are relevant.
+- Avoid repetitive introductions like "Introduction", "Key Points", or "Important Exam Points" unless the question specifically asks for them.
+- Keep the answer concise but complete.
+- Never invent facts.
 
 Study Material:
 {context}
@@ -76,15 +81,26 @@ Answer:
 """
 )
 
+import time   # Add this at the top of the file if it's not already there
+
 def get_chain(session_id: str, collection_name: str = "studymate"):
     if session_id not in _sessions:
+
+        start = time.time()
         vectordb = get_vectordb(collection_name)
+        print(f"✅ VectorDB loaded in {time.time() - start:.2f} sec")
+
+        start = time.time()
         retriever = vectordb.as_retriever(search_kwargs={"k": 4})
+        print(f"✅ Retriever created in {time.time() - start:.2f} sec")
+
+        start = time.time()
         memory = ConversationBufferMemory(
             memory_key="chat_history",
             return_messages=True,
             output_key="answer",
         )
+
         chain = ConversationalRetrievalChain.from_llm(
             llm=get_llm(),
             retriever=retriever,
@@ -92,20 +108,29 @@ def get_chain(session_id: str, collection_name: str = "studymate"):
             return_source_documents=True,
             combine_docs_chain_kwargs={
                 "prompt": QA_PROMPT
-},
+            },
         )
+
+        print(f"✅ Chain created in {time.time() - start:.2f} sec")
+
         _sessions[session_id] = chain
+
     return _sessions[session_id]
 
-
+import time
 def ask(question: str, session_id: str = "default", collection_name: str = "studymate"):
     """
     Main entry point. Call this from the backend's /chat endpoint.
 
     Returns: {"answer": str, "sources": [filenames]}
     """
+     
+
     chain = get_chain(session_id, collection_name)
+
+    start = time.time()
     result = chain.invoke({"question": question})
+    print(f"✅ LLM response took {time.time() - start:.2f} seconds")
     sources = list({
         doc.metadata.get("source", "unknown")
         for doc in result.get("source_documents", [])
