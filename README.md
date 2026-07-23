@@ -2,7 +2,7 @@
 
 StudyMate AI is an AI-powered study assistant that helps students learn from their own study material. Users can upload notes in different formats, ask questions, generate quizzes, and create flashcards. The application uses Retrieval-Augmented Generation (RAG) to provide responses based only on the uploaded documents instead of relying on general knowledge.
 
-This project was developed as part of our **Generative & Agentic AI Summer Internship Program (2026)** capstone.
+This project was developed as part of our **Generative & Agentic AI Summer Internship Program (SIP 2026)** capstone.
 
 ---
 
@@ -160,41 +160,25 @@ streamlit run app.py
 
 ---
 
-## 📸 Application Screenshots
+# Screenshots
 
-### 🏠 Home Page
+## Home
+(image)
 
-![Home](screenshots/home.png)
+## Upload Notes
+(image)
 
----
+## AI Chat
+(image)
 
-### 📤 Upload Notes
+## Quiz Generator
+(image)
 
-![Upload](screenshots/upload.png)
+## Flashcards
+(image)
 
----
-
-### 💬 AI Chat
-
-![Chat](screenshots/chat.png)
-
----
-
-### 📝 AI Quiz Generator
-
-![Quiz](screenshots/quiz.png)
-
----
-
-### 🧠 AI Flashcards
-
-![Flashcards](screenshots/flashcards.png)
-
----
-
-### 🏗️ System Architecture
-
-![Architecture](screenshots/architecture.jpg)
+## System Architecture
+(image)
 
 ---
 
