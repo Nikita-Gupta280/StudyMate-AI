@@ -163,22 +163,38 @@ streamlit run app.py
 # Screenshots
 
 ## Home
-(image)
+
+![Home](screenshots/home.png)
+
+---
 
 ## Upload Notes
-(image)
+
+![Upload Notes](screenshots/upload.png)
+
+---
 
 ## AI Chat
-(image)
+
+![AI Chat](screenshots/chat.png)
+
+---
 
 ## Quiz Generator
-(image)
+
+![Quiz Generator](screenshots/quiz.png)
+
+---
 
 ## Flashcards
-(image)
+
+![Flashcards](screenshots/flashcards.png)
+
+---
 
 ## System Architecture
-(image)
+
+![System Architecture](screenshots/system arch.png)
 
 ---
 
