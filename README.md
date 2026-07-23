@@ -192,6 +192,7 @@ streamlit run app.py
 
 ---
 
+# Project Architecture
 ## System Architecture
 
 ![System Architecture](screenshots/system arch.png)
