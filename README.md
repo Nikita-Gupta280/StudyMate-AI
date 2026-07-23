@@ -160,6 +160,44 @@ streamlit run app.py
 
 ---
 
+## 📸 Application Screenshots
+
+### 🏠 Home Page
+
+![Home](screenshots/home.png)
+
+---
+
+### 📤 Upload Notes
+
+![Upload](screenshots/upload.png)
+
+---
+
+### 💬 AI Chat
+
+![Chat](screenshots/chat.png)
+
+---
+
+### 📝 AI Quiz Generator
+
+![Quiz](screenshots/quiz.png)
+
+---
+
+### 🧠 AI Flashcards
+
+![Flashcards](screenshots/flashcards.png)
+
+---
+
+### 🏗️ System Architecture
+
+![Architecture](screenshots/architecture.jpg)
+
+---
+
 ## Team
 
 | Member | Contribution |
